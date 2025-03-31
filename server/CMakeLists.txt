@@ -1,0 +1,16 @@
+cmake_minimum_required(VERSION 3.10)
+project(server)
+project(test)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+find_package(spdlog REQUIRED)
+find_package(GTest REQUIRED)
+find_package(fmt REQUIRED)
+include_directories(${PROJECT_SOURCE_DIR})
+
+add_executable(server main_server.cpp server.cpp)
+add_definitions(-DTESTING)
+add_executable(test server.cpp test.cpp)
+target_link_libraries(server fmt::fmt-header-only pthread)
+target_link_libraries(test ${GTEST_LIBRARIES} fmt::fmt-header-only pthread)
